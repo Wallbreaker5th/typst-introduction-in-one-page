@@ -8,7 +8,7 @@
   weight: 700,
 )
 #set page(
-  margin: (left: 5%, y: 5%, right: 3%),
+  margin: (x: 3%, y: 5%),
   flipped: true,
 )
 #show raw.where(block: true): it => {
@@ -23,7 +23,7 @@
       outset: 0.5cm,
       radius: (top-left: 0.5cm, bottom-right: 0.5cm),
     ),
-    dx: -0.5cm,
+    dx: -0.2cm,
   )
 }
 
@@ -85,7 +85,7 @@
 #let sample-code = ```typ
 #set heading(numbering: "一、") // 样式设置
 = 兰亭集序
-永和九年，岁在*癸丑*，暮春之初，会于会稽山阴之兰亭，修禊事也。                      // 标记语法
+永和九年，岁在*癸丑*，暮春之初，会于会稽山阴之兰亭，修禊事也。                  // 标记语法
 #{                              // 编程语言
  set text(size: 0.8em)
  let t(name, s, o) = table(
@@ -106,7 +106,7 @@ $ 353 - floor(353/60) = 53 $
 #v(-1em)
 
 #grid(
-  columns: (7.8cm, 1.5fr, 1fr, 4.4cm, 4.4cm),
+  columns: (16em, 1.5fr, 1fr, 9.5em, 9.5em),
   // stroke: black+1pt,
   inset: (x: 0.5em, y: 0.5em),
   grid.cell(
@@ -149,7 +149,8 @@ $ 353 - floor(353/60) = 53 $
     colspan: 4,
     x: 1,
     y: 0,
-    align: center
+    align: center,
+    inset: (right: 0pt)
   )[
     #subtitle[代码展示]
   ],
@@ -158,9 +159,8 @@ $ 353 - floor(353/60) = 53 $
     colspan: 2,
     x: 1,
     y: 1,
+    inset: (right: 0pt)
   )[
-    // #set text(size: 0.95em)
-    
     #sample-code
   ],
   grid.cell(
