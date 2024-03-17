@@ -8,7 +8,7 @@
   weight: 700,
 )
 #set page(
-  margin: 5%,
+  margin: (left: 5%, y: 5%, right: 3%),
   flipped: true,
 )
 #show raw.where(block: true): it => {
@@ -44,7 +44,7 @@
   under-heavy-line(it)
 }
 #show heading.where(level: 2): it => {
-  under-heavy-line(it)
+  align(center, under-heavy-line(it))
 }
 #show heading.where(level: 3): it => {
   align(center, under-heavy-line(it))
@@ -85,20 +85,17 @@
 #let sample-code = ```typ
 #set heading(numbering: "一、") // 样式设置
 = 兰亭集序
-永和九年，岁在*癸丑*，暮春之初，会于会稽山阴之兰亭，修禊事也。              // 标记语法
+永和九年，岁在*癸丑*，暮春之初，会于会稽山阴之兰亭，修禊事也。                      // 标记语法
 #{                              // 编程语言
  set text(size: 0.8em)
- let t(name, s, offset, n) = table(
-  columns: (3em, ) + (auto, ) * n,
-  inset: 0.3em, align: center,
-  strong(name),
-  ..s.clusters(),
+ let t(name, s, o) = table(
+  inset:0.3em, columns:s.len()+1, align:center,
+  strong(name), ..s,
   [*年份*],
-  ..range(n).map(i =>
-   str(calc.rem(i + offset, n)))
+  ..(range(o,s.len())+range(o)).map(str)
  )
- t("天干", "甲乙丙丁戊己庚辛壬癸", 4, 10)
- t("地支", "子丑寅卯辰巳午未申酉戌亥", 4, 12)
+ t("天干","甲乙丙丁戊己庚辛壬癸".clusters(),4)
+ t("地支","子丑寅卯辰巳午未申酉戌亥".clusters(),4)
 }
 $ cases(x equiv 3 (mod 10),     // 公式排版
         x equiv 5 (mod 12) )
@@ -109,12 +106,12 @@ $ 353 - floor(353/60) = 53 $
 #v(-1em)
 
 #grid(
-  columns: (7.8cm, auto, 1fr, 1fr, 4.5cm, 4.5cm),
-  // rows: 3,
+  columns: (7.8cm, 1.5fr, 1fr, 4.4cm, 4.4cm),
   // stroke: black+1pt,
-  inset: (x: 0.5em, y: 1em),
+  inset: (x: 0.5em, y: 0.5em),
   grid.cell(
     rowspan: 2,
+    inset: (bottom: 1.5em),
     title[Typst 介绍与展示]
   ),
   grid.cell(
@@ -136,6 +133,7 @@ $ 353 - floor(353/60) = 53 $
     y: 3,
   )[
     #subtitle[Typst 的优势]
+
     - 公式排版、参考文献管理等基本功能
     - 语法简洁，容易上手
     - 现代的、增量编译的编程语言可以
@@ -148,52 +146,52 @@ $ 353 - floor(353/60) = 53 $
   ],
   grid.cell(
     rowspan: 1,
-    colspan: 5,
+    colspan: 4,
     x: 1,
     y: 0,
     align: center
   )[
-    #subtitle[效果展示]
+    #subtitle[代码展示]
   ],
   grid.cell(
-    rowspan: 4,
-    colspan: 3,
+    rowspan: 3,
+    colspan: 2,
     x: 1,
     y: 1,
   )[
+    // #set text(size: 0.95em)
+    
     #sample-code
   ],
   grid.cell(
     rowspan: 3,
     colspan: 2,
-    x: 4,
+    x: 3,
     y: 1,
   )[
-    #set text(font: "Source Han Sans SC", weight: 500)
+    #set text(font: "Source Han Sans SC", weight: 500, size: 0.95em)
     #eval("[" + sample-code.text + "]")
   ],
   grid.cell(
     rowspan: 1,
-    colspan: 1,
+    colspan: 4,
     x: 1,
-    y: 5,
-    align: horizon,
+    y: 4,
+    align: center
   )[
-    #rotate(-90deg, reflow: true)[
-      == 部分包展示
-    ]
+    #subtitle[部分包效果展示]
   ],
   grid.cell(
     rowspan: 1,
     colspan: 1,
-    x: 2,
+    x: 3,
     y: 5,
     align: center,
   )[
     #import "@preview/cetz:0.2.1"
-    === CeTZ
+    == CeTZ
 
-    #v(1fr)
+    #v(1em)
 
     #cetz.canvas({
       import cetz.draw: *
@@ -221,12 +219,15 @@ $ 353 - floor(353/60) = 53 $
   grid.cell(
     rowspan: 1,
     colspan: 1,
-    x: 3,
+    x: 2,
     y: 5,
   )[
     #import "@preview/pinit:0.1.3": *
 
-    === Pinit
+    == Pinit
+
+    
+    #v(1em)
 
     后之览者，亦将有感于#pin(1)斯#pin(2)文。
 
@@ -235,14 +236,14 @@ $ 353 - floor(353/60) = 53 $
     #pinit-point-from(2, [这])
   ],
   grid.cell(
-    rowspan: 2,
+    rowspan: 1,
     colspan: 1,
-    x: 4,
-    y: 4,
+    x: 1,
+    y: 5,
   )[
     #import "@preview/showybox:2.0.1": showybox
 
-    === Showybox
+    == Showybox
 
     #showybox(
       frame: (
@@ -264,20 +265,20 @@ $ 353 - floor(353/60) = 53 $
     )
   ],
   grid.cell(
-    rowspan: 2,
+    rowspan: 1,
     colspan: 1,
-    x: 5,
-    y: 4,
+    x: 4,
+    y: 5,
     align: center,
   )[
-    === Fletcher
+    == Fletcher
 
     #import "@preview/fletcher:0.4.2" as fletcher: node, edge
 
     #fletcher.diagram(
       node-stroke: blue.darken(50%),
       node-fill: blue.lighten(80%),
-      spacing: 1em,
+      spacing: 0.9em,
       edge-stroke: 1pt,
       node((0, 0), [A]),
       edge("~>"),
@@ -298,27 +299,8 @@ $ 353 - floor(353/60) = 53 $
   ),
 
   grid.hline(
-    y: 1,
-    start: 1,
-    end: 6,
-    stroke: sub-stroke
-  ),
-
-  grid.hline(
-    y: 5,
-    start: 1,
-    end: 4,
-    stroke: sub-stroke
-  ),
-  grid.vline(
-    x: 4,
-    start: 4,
-    end: 5,
-    stroke: sub-stroke
-  ),
-  grid.hline(
     y: 4,
-    start: 4,
+    start: 1,
     end: 6,
     stroke: sub-stroke
   ),
@@ -326,5 +308,6 @@ $ 353 - floor(353/60) = 53 $
 
 #place(right+bottom, move(dy: 1.5em)[
   #set text(fill: gray)
-  This work by Wallbreaker5th is marked with CC0 1.0.\ To view a copy of this license, visit http://creativecommons.org/publicdomain/zero/1.0
+  This work by Wallbreaker5th is marked with CC0 1.0.\
+  Repo: https://github.com/Wallbreaker5th/typst-introduction-in-one-page
 ])
